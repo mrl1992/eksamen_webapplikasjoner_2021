@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/context/*": ["context/*"],
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/lib/*": ["lib/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/features/*": ["features/*"]
+    },
+    "module": "commonjs",
+    "target": "esnext"
+  },
+  "exclude": ["node_modules", "dist"]
+}

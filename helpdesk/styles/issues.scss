@@ -1,0 +1,145 @@
+.issue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 'department severity' 'title title' 'description description' 'creator .' 'footer footer' 'comments comments';
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .span-2 {
+    grid-column: 1 / span 2;
+  }
+
+  .department {
+    grid-area: department;
+    color: $light-gray;
+  }
+
+  .severity {
+    grid-area: severity;
+    justify-self: end;
+    font-weight: $semi-bold;
+
+    .dot {
+      border-radius: 50%;
+      width: 0.7rem;
+      height: 0.7rem;
+      display: inline-block;
+    }
+
+    &.red {
+      @include priority($red-color);
+    }
+    &.green {
+      @include priority($green-color);
+    }
+    &.yellow {
+      @include priority($yellow-color);
+    }
+  }
+
+  .description {
+    grid-area: description;
+  }
+
+  .creator {
+    grid-area: creator;
+    margin-top: 0.6rem;
+    font-size: $small;
+    color: $light-gray;
+  }
+
+  footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+
+    time {
+      font-size: $smaller;
+      color: $light-gray;
+    }
+
+    button {
+      font-size: $small;
+
+      &.active {
+        color: $light-blue;
+      }
+
+      &.resolved {
+        color: $green-color;
+      }
+    }
+  }
+}
+
+.allissues {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'title filter' 'issues issues';
+
+  .issues-container {
+    grid-area: issues;
+    display: flex;
+    flex-direction: column;
+    gap: $large;
+  }
+
+  h1 {
+    grid-area: title;
+    color: $primary;
+  }
+
+  .filter {
+    grid-area: filter;
+    align-self: center;
+    justify-self: end;
+    margin-top: 0.3rem;
+
+    select {
+      margin-left: 1rem;
+      padding: 2px 6px;
+    }
+  }
+}
+
+.add-comment {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $small;
+  }
+
+  h2 {
+    font-size: $normal;
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    align-self: flex-end;
+    pad: 4px 6px;
+  }
+}
+
+.comments {
+  grid-area: comments;
+  h3,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    font-size: $normal;
+    font-weight: $semi-bold;
+  }
+}

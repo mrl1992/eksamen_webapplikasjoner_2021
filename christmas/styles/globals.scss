@@ -1,0 +1,291 @@
+@import './config.scss';
+@import './dashboard.scss';
+@import './modal.scss';
+
+html {
+  font-size: 100%;
+  // font-size: calc(1.4vw / 2);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: $primary;
+  background-color: $theme-white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100vh;
+}
+
+.system_btn {
+  position: absolute;
+  bottom: 0;
+  right: 25px;
+}
+
+main {
+  width: 40%;
+  margin: 5vh auto 7vh auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: $large;
+}
+
+// SVG Laget med: https://www.svgwaves.io/
+header {
+  height: 14vh;
+  // background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1920 357" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="rgba(255, 255, 255, 1)" d="M 0 233 C 102.80000000000001 233 154.2 202 257 202 L 257 202 L 257 0 L 0 0 Z" stroke-width="0"></path> <path fill="rgba(255, 255, 255, 1)" d="M 256 202 C 398.4 202 469.6 273 612 273 L 612 273 L 612 0 L 256 0 Z" stroke-width="0"></path> <path fill="rgba(255, 255, 255, 1)" d="M 611 273 C 794.6 273 886.4 198 1070 198 L 1070 198 L 1070 0 L 611 0 Z" stroke-width="0"></path><path fill="rgba(255, 255, 255, 1)" d="M 1069 198 C 1233 198 1315 266 1479 266 L 1479 266 L 1479 0 L 1069 0 Z" stroke-width="0"></path><path fill="rgba(255, 255, 255, 1)" d="M 1478 266 C 1602.8 266 1665.2 206 1790 206 L 1790 206 L 1790 0 L 1478 0 Z" stroke-width="0"></path><path fill="rgba(255, 255, 255, 1)" d="M 1789 206 C 1841.4 206 1867.6 233 1920 233 L 1920 233 L 1920 0 L 1789 0 Z" stroke-width="0"></path></svg>');
+  // background-size: cover;
+  // background-position-y: -13vh;
+}
+
+nav {
+  width: 50%;
+  margin: 0 auto;
+
+  padding-top: 3vh;
+
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $large;
+
+  h1 {
+    margin: 0;
+    font-family: 'Pinyon Script', cursive;
+    font-weight: $bold;
+    color: $red;
+    text-shadow: 2px 2px 0px $dark-green;
+    font-size: 2 * $x-large;
+  }
+
+  span {
+    border: 2px solid $red;
+    border-radius: 0.3rem;
+    padding: 0.7rem 1.3rem;
+    font-weight: $semi-bold;
+    color: $red;
+
+    &:hover {
+      background-color: $red;
+      color: $theme-white;
+    }
+  }
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $x-large;
+
+  .slot {
+    border: 1px solid $light-gray;
+    border-radius: $small;
+
+    // Experimental, se fallback
+    // https://css-tricks.com/almanac/properties/a/aspect-ratio/
+    // Justerer bredden / hyden på slots
+    aspect-ratio: 1.5 / 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-size: 2 * $large;
+      font-weight: $semi-bold;
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      margin: 0;
+      &.small {
+        font-size: $small;
+      }
+    }
+
+    &.open {
+      background-color: $green;
+      h1 {
+        font-size: $large;
+      }
+
+      &:hover {
+        background-color: darken($green, 10%);
+      }
+    }
+
+    &.can-open {
+      background-color: $white;
+      cursor: pointer;
+
+      &.opening {
+        transform: rotateY(180deg);
+        animation: open 1s linear;
+        backface-visibility: hidden;
+      }
+
+      &:hover {
+        background-color: darken($white, 5%);
+      }
+    }
+
+    &.not-available {
+      color: $darker-gray;
+      background-color: $light-gray;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($light-gray, 5%);
+      }
+    }
+
+    &.shake {
+      animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+  font-weight: $semi-bold;
+
+  svg {
+    height: $large;
+    width: $large;
+    align-self: center;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(359deg);
+    }
+  }
+
+  .rotate {
+    animation: rotate 4s linear infinite;
+  }
+}
+
+// Fallback for aspect-ratio
+@supports not (aspect-ratio: 1 / 1) {
+  .element::before {
+    float: left;
+    padding-top: 70%;
+    content: '';
+  }
+
+  .element::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+
+.alert {
+  // width: 100%;
+  padding: 0.5rem;
+  border: 1px solid;
+  border-radius: 10px;
+  margin: 1rem 0;
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  &.warning {
+    background-color: $warning;
+    color: darken($warning, 50);
+    border-color: darken($warning, 5);
+  }
+
+  &.success {
+    background-color: $success;
+    color: darken($success, 50);
+    border-color: darken($success, 5);
+  }
+
+  &.danger {
+    background-color: $danger;
+    color: darken($danger, 50);
+    border-color: darken($danger, 5);
+  }
+
+  &.info {
+    background-color: $info;
+    color: darken($info, 50);
+    border-color: darken($info, 5);
+  }
+}
+
+.grow {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+h1 {
+  color: $dark-green;
+}
+
+// Shake hentet fra: https://css-tricks.com/snippets/css/shake-css-keyframe-animation/
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes open {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
